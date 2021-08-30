@@ -14,7 +14,7 @@ console.log(circles);
 nextBtn.addEventListener('click', () => {
   i = 0
 
-  console.log('click');
+  console.log(`circles length: ${circles.length}`);
   
   while (i < circles.length) {
     
@@ -25,9 +25,11 @@ nextBtn.addEventListener('click', () => {
       document.getElementById('prev').removeAttribute('disabled')
       circles[i].classList.add('active')
       return
+    } 
     }
+  document.getElementById('next').setAttribute('disabled', '')
 
-  }
+  })
 
 
   
@@ -36,7 +38,6 @@ nextBtn.addEventListener('click', () => {
   // console.log('clicked1');
   // circles[0].classList.add('active')
   // document.getElementById('prev').removeAttribute('disabled')
-})
 
 
 
