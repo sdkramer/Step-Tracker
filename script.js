@@ -1,3 +1,5 @@
+const progress = document.getElementById('progress')
+
 const nextBtn = document.getElementById('next')
 
 const prevBtn = document.getElementById('prev')
@@ -10,24 +12,35 @@ console.log(circles);
 // let progWidth = progStyles.getPropertyValue('width')
 
 // console.log(progWidth);
+let currentActive = 1
 
 nextBtn.addEventListener('click', () => {
-  i = 0
+  currentActive++
+ 
 
-  console.log(`circles length: ${circles.length}`);
+  if(currentActive > circles.length) {
+    currentActive = circles.length
+  }
+
+  console.log(`ca: ${currentActive}`);
+  console.log(circles.length);
+
+  update()
+  // document.getElementById('prev').removeAttribute('disabled')
+  // circles[currentActive].classList.add('active')
   
-  while (i < circles.length) {
+  // while (currentActive < circles.length) {
     
-    if (circles[i].classList.contains('active')) {
-      i = i + 1
-    } else {
-      console.log(`clicked ${i} ${circles[i].innerHTML}`);
-      document.getElementById('prev').removeAttribute('disabled')
-      circles[i].classList.add('active')
-      return
-    } 
-    }
-  document.getElementById('next').setAttribute('disabled', '')
+  //   if (circles[currentActive].classList.contains('active')) {
+  //     i = i + 1
+  //   } else {
+  //     console.log(`clicked ${i} ${circles[i].innerHTML}`);
+  //     document.getElementById('prev').removeAttribute('disabled')
+  //     circles[currentActive].classList.add('active')
+  //     return
+  //   } 
+  //   }
+  // document.getElementById('next').setAttribute('disabled', '')
 
   })
 
@@ -43,4 +56,36 @@ nextBtn.addEventListener('click', () => {
 
 prevBtn.addEventListener('click', () => {
 
+  currentActive--
+  if(currentActive < 1) {
+    currentActive = 1
+  }
+
+  update()
+
+  
 })
+
+function update() {
+  circles.forEach((circle, idx) => {
+    // console.log(`circle: ${circle}; index: ${idx}`)
+    if(idx < currentActive) {
+      circle.classList.add('active')
+    } else {
+      circle.classList.remove('active')
+    }
+  })
+
+  const actives = document.querySelectorAll('.active')
+
+  progress.style.width = (actives.length - 1) / (circles.length - 1) * 100 + '%'
+
+  if(currentActive === 1) {
+    prevBtn.disabled = true
+  } else if (currentActive === circles.length) {
+    nextBtn.disabled = true
+  } else {
+    prevBtn.disabled = false
+    nextBtn.disabled = false
+  }
+}
